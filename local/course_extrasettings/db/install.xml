@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/course_extrasettings/db" VERSION="20160826" COMMENT="XMLDB file for Moodle local/course_extrasettings"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+    <TABLES>
+        <TABLE NAME="course_extrasettings_general" COMMENT="course_extrasettings_general">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="courseimage" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="specializations" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="institution" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="coursetype" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="courselevel" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="language" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="currency" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="featurecourse" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="lifetime" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="certificate" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="courseid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="cost" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="certificatedownload" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="formalcredit" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="credits" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="examrule" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="costforformalcredit" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="attendancecompletion" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="costforattendance" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="length" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="estimated" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="videourl" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="license" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="whatsinside" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="textbook" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="recommendedbackground" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="syllabus" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="audience" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="crecruitments" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="contextid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="certificate1" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="certificatedownload1" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="examrule1" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="certificate2" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="certificatedownload2" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="examrule2" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="vattendancecompletion" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="vcostforattendance" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="engtitle" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="encompetence" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="enbadgecriteria" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="enbadgetags" TYPE="char" LENGTH="1000" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="itcompetence" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="itbadgecriteria" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="itbadgetags" TYPE="char" LENGTH="1000" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="badgeimage" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="badgestatus" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="coursestatus" TYPE="int" LENGTH="20" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="coursemode" TYPE="int" LENGTH="20" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+                <FIELD NAME="crsmaintenance" TYPE="int" LENGTH="20" NOTNULL="false" DEFAULT="1" SEQUENCE="false"/>
+                <FIELD NAME="enrolstart" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="crsopen" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="tutoringstart" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="tutoringstop" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="enrolstop" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="crsclosed" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="nexteditiondate" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="syncstatus" TYPE="int" LENGTH="20" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="durationweek" TYPE="int" LENGTH="20" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="estimatedweek" TYPE="int" LENGTH="20" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="capstonecrs" TYPE="int" LENGTH="20" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="eduopen_watchlist" COMMENT="watchlist">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="course" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+    </TABLES>
+</XMLDB>

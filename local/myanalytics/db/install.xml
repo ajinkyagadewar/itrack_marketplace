@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/myanalytics/db" VERSION="20110225" COMMENT="XMLDB file for Moodle local/myanalytics"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>   <TABLES>
+    <TABLE NAME="myanalytics_fav" COMMENT="myanalytics_fav">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="level" TYPE="char" LENGTH="12" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="label" TYPE="text" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="link" TYPE="text" LENGTH="1000" NOTNULL="true" SEQUENCE="false"/>        
+       </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>     
+  </TABLES>
+</XMLDB>

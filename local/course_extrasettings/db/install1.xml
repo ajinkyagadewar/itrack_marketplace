@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/course_extrasettings/db" VERSION="20110225" COMMENT="XMLDB file for Moodle local/course_extrasettings"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+     <TABLES>
+    <TABLE NAME="course_extrasettings_payment" COMMENT="course_extrasettings_payment" NEXT="course_extrasettings_general">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="pcode"/>
+        <FIELD NAME="pcode" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="promocode"/>
+        <FIELD NAME="promocode" TYPE="char" LENGTH="30" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="pcode" NEXT="discount"/>
+        <FIELD NAME="discount" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="promocode" NEXT="promoenddate"/>
+        <FIELD NAME="promoenddate" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="discount" NEXT="active"/>
+        <FIELD NAME="active" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="promoenddate" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="active" />
+        
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+	
+	
+     <TABLE NAME="course_extrasettings_general" COMMENT="course_extrasettings_general" PREVIOUS="course_extrasettings_payment">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="courseimage"/>
+        <FIELD NAME="courseimage" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="specializations"/>
+        <FIELD NAME="specializations" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"  PREVIOUS="courseimage" NEXT="institution"/>
+        <FIELD NAME="institution" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"  PREVIOUS="specializations" NEXT="coursetype"/>
+        <FIELD NAME="coursetype" TYPE="text" LENGTH="40" NOTNULL="true" SEQUENCE="false" PREVIOUS="institution" NEXT="courselevel"/>
+		<FIELD NAME="courselevel" TYPE="text" LENGTH="40" NOTNULL="true" SEQUENCE="false" PREVIOUS="coursetype" NEXT="language"/>
+        <FIELD NAME="language" TYPE="text" LENGTH="40" NOTNULL="true" SEQUENCE="false" PREVIOUS="courselevel" NEXT="exam"/>
+        <FIELD NAME="exam" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" PREVIOUS="language" NEXT="featurecourse"/>
+		<FIELD NAME="featurecourse" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" PREVIOUS="exam" NEXT="lifetime"/>
+        <FIELD NAME="lifetime" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" PREVIOUS="featurecourse" NEXT="certificate"/>
+        <FIELD NAME="certificate" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" PREVIOUS="lifetime" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="certificate" NEXT="cost"/>
+        <FIELD NAME="cost" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="courseid"/>
+        <FIELD NAME="certificatedownload" TYPE="text" LENGTH="250" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="cost"/>
+
+        <FIELD NAME="formalcredit" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" PREVIOUS="certificatedownload" NEXT="costforformalcredit"/>
+        <FIELD NAME="costforformalcredit" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="formalcredit"/>
+        <FIELD NAME="attendancecompletion" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" PREVIOUS="costforformalcredit" NEXT="costforattendance"/>
+        <FIELD NAME="costforattendance" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="attendancecompletion"/>
+
+        <FIELD NAME="length" TYPE="char" LENGTH="255" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="costforattendance"/>
+        <FIELD NAME="estimated" TYPE="char" LENGTH="255" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="length"/>
+		<FIELD NAME="videourl" TYPE="char" LENGTH="255" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="estimated"/>
+		<FIELD NAME="license" TYPE="char" LENGTH="255" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="videourl"/>
+		<FIELD NAME="whatsinside" TYPE="text" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="license"/>
+		<FIELD NAME="recommendedbackground" TYPE="text" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="whatsinside"/>
+		<FIELD NAME="audience" TYPE="text" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="recommendedbackground"/>
+		<FIELD NAME="crecruitments" TYPE="text" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="audience"/>
+		 <FIELD NAME="contextid" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="crecruitments"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+   
+  </TABLES>
+</XMLDB>

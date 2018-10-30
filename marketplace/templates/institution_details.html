@@ -1,0 +1,251 @@
+<html>
+    <body>
+        <div class="container-fluid">
+            <?php
+            $myinst = $DB->get_record('block_eduopen_master_inst', array('id' => $institutionid));
+            $institution = $myinst;
+            //foreach($myinst as $institution){
+            $imglg = cinstitution_images($institution);
+            $imgbann = banner_images($institution);
+            ?>
+            <header class="ban_img">
+                <div class="edtd" id="instbanimage">
+                    <img src="<?php echo $imgbann; ?>" class="img-responsive" width="100%" />
+                </div>
+            </header>
+            <div class="row-fluid">
+                <div class="col-md-12 col-sm-12 col-xs-12 margnToPBot">
+                    <div class="col-md-3 col-sm-4 col-xs-12 instdetailslogo">
+                        <div class="container-fluid">
+                            <img src="<?php echo  $imglg ?>" class="img-responsive size200"/>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-sm-8 col-xs-12 paDRight">
+                        <h2 class="instidetailshd">
+                            <?php
+                            $currlang = current_language();
+                            if ($currlang == 'en') {
+                            echo $institution->name;
+                            } else if ($currlang == 'it') {
+                            echo $institution->itname;
+                            }
+                            ?>
+                        </h2>
+                        <p class="fnt10"><?php echo $institution->address ?></p>
+                        <div id="margntp">
+                            <p>
+                                <?php
+                                $currlang = current_language();
+                                if ($currlang == 'en') {
+                                echo $institution->description;
+                                } else if ($currlang == 'it') {
+                                echo $institution->itdescription;
+                                }
+                                ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Course Section (Active Courses) -->
+                <?php
+                $cidArray = array();
+                $myinstdetails = $DB->get_records('course_extrasettings_general',array('institution' => $institutionid, 'coursestatus' => 1, 'capstonecrs' => 0));
+                foreach ($myinstdetails as $detailsinst) {
+                $mycoursedetails = $DB->get_records('course', array('id' => $detailsinst->courseid, 'visible' => 1));
+                foreach ($mycoursedetails as $alldata) {
+                $cidArray[] = $alldata->id;
+                }
+                }
+                if (!empty($cidArray)) {
+                ?>
+                <div class="container-fluid  tcenter fcourse"> 
+                    <h2 class="instidetailsh2"><?php print_string('hmc', 'theme_eduopen') ?></h2>
+                    <hr>
+                </div>
+                <div class="row-fluid" id ="frontrowpad">
+                    <?php echo featuredcourse_block($cidArray); ?>
+                </div>
+                <?php } ?>
+
+                <!--Pathway Section (Active Pathways)-->
+                <?php
+                $list = array();
+                $myinstspl = $DB->get_records_sql("SELECT DISTINCT specializations FROM {course_extrasettings_general}
+                WHERE institution  = '$institution->id' AND coursestatus=1 AND capstonecrs=0");
+                foreach ($myinstspl as $myinstsplrs) {
+                if ($myinstsplrs->specializations != 'none') {
+                $xx = explode(',', $myinstsplrs->specializations);
+                foreach ($xx as $xxx) {
+                if(!isset($list[$xxx])) {
+                $list[$xxx] = $xxx;
+                }                           
+                }
+                }
+                }
+                $pathidArr = $list;
+                if ($pathidArr) {
+                $pathimp = implode(',', $pathidArr);
+                $rExist = $DB->record_exists_sql("SELECT * FROM {block_eduopen_master_special} WHERE status='1' AND pathwaystatus=1 AND id IN ($pathimp)");
+                if ($rExist) {
+                ?>
+                <div class="container-fluid  tcenter fcourse"> 
+                    <h2><?php print_string('splz', 'theme_eduopen') ?></h2>
+                    <hr>
+                </div>
+                <div class="row-fluid" id="frontrowpad">
+                    <?php echo featured_pathway_block($pathidArr); ?>
+                </div>
+                <?php } } ?>
+
+                <!--Course Section (Archived Courses)-->
+                <?php
+                $arcArray = array();
+                $arcinstdetails = $DB->get_records('course_extrasettings_general',array('institution' => $institutionid, 'coursestatus' => 0, 'capstonecrs' => 0));
+                foreach ($arcinstdetails as $arcdetailsinst) {
+                $arcmycoursedetails = $DB->get_records('course', array('id' => $arcdetailsinst->courseid, 'visible' => 1));
+                foreach ($arcmycoursedetails as $arcalldata) {
+                $arcArray[] = $arcalldata->id;
+                }
+                }
+                if (!empty($arcArray)) {
+                ?>
+                <div class="container-fluid  tcenter fcourse"> 
+                    <h2 class="instidetailsh2"><?php print_string('archmc', 'theme_eduopen') ?></h2>
+                    <hr>
+                </div>
+                <div class="row-fluid" id ="frontrowpad">
+                    <?php echo featuredcourse_block($arcArray); ?>
+                </div>
+                <?php } ?>
+                <!--Pathway Section (Archived Pathways)-->
+                <?php
+                $arclist = array();
+                $arcpathidArr = array();
+                $arcmyinstspl = $DB->get_records_sql("SELECT DISTINCT specializations FROM {course_extrasettings_general}
+                WHERE institution  = '$institution->id' AND coursestatus=0 AND capstonecrs=0");
+                foreach ($arcmyinstspl as $arcmyinstsplrs) {
+                if ($arcmyinstsplrs->specializations != 'none') {
+                $arcxx = explode(',', $arcmyinstsplrs->specializations);
+                foreach ($arcxx as $arcxxx) {
+                if(!isset($arclist[$arcxxx])) {
+                $arclist[$arcxxx] = $arcxxx;
+                }                           
+                }
+                }
+                }
+                $arcpathidArr = $arclist;
+                if ($arcpathidArr) {
+                $arcpathimp = implode(',', $arcpathidArr);
+                $arcrExist = $DB->record_exists_sql("SELECT * FROM {block_eduopen_master_special} WHERE status='1' AND pathwaystatus=0 AND id IN ($arcpathimp)");
+                if ($arcrExist) {
+                ?>
+                <div class="container-fluid  tcenter fcourse"> 
+                    <h2><?php print_string('arcsplz', 'theme_eduopen') ?></h2>
+                    <hr>
+                </div>
+                <div class="row-fluid" id="frontrowpad">
+                    <?php echo featured_pathway_block($arcpathidArr); ?>
+                </div>
+                <?php } } ?>
+
+                <!-- Instructor Section -->
+                <?php
+                $csinstdetails = $DB->get_records('course_extrasettings_general',
+                array('institution' => $institutionid, 'coursestatus' => 1, 'capstonecrs' => 0));
+                foreach ($csinstdetails as $detailsinstcs) {
+                $finallcsid[] = $detailsinstcs->courseid;
+                }
+                if (!empty($finallcsid)) {
+                $arrayimp = implode(',', $finallcsid);
+                $instruct = $DB->get_records_sql("SELECT DISTINCT u.id, c.visible, u.firstname, u.lastname, u.department, u.picture,
+                r.name FROM {course} c JOIN {context} ct ON c.id = ct.instanceid
+                JOIN {role_assignments} ra ON ra.contextid = ct.id JOIN {user} u ON u.id = ra.userid
+                JOIN {role} r ON r.id = ra.roleid WHERE r.shortname = 'editingteacher' AND c.visible=1 AND c.id IN ($arrayimp)");
+                if (!empty($instruct)) {
+                ?>
+                <div class="container-fluid  tcenter fcourse"> 
+                    <h2 class="instidetailsh2"><?php print_string('instcrs', 'theme_eduopen') ?></h2>
+                    <hr>
+                </div>
+                <?php
+                }
+                $editflag = 'editflag';
+                echo instructor_block($finallcsid, $editflag);
+                }
+                ?>
+
+                <div class="container-fluid  tcenter fcourse"> 
+                    <h2 class="instidetailsh2"><?php print_string('contactad', 'theme_eduopen') ?></h2>
+                    <hr>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 pad0A">
+                    <div class="row-fluid ">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <?php if (isset($institution->web) && !empty($institution->web)) {?>
+                            <p class="pbottom10 halign">
+                                <a href="<?php echo 'http://'.$institution->web; ?>" target="_blank" class="wrap  socialink">
+                                    <span class="fa fa-globe fa-2x"></span>
+                                    <?php //echo $institution->web ;?>
+                                </a>
+                            </p> 
+                            <?php } if (isset($institution->facebook) && !empty($institution->facebook)) { ?>
+                            <p class="pbottom10 halign">
+                                <?php 
+                                if (strpos($institution->facebook,'https://') !== false) {
+                                $facebookurl = str_replace("https://","",$institution->facebook);
+                                } else if (strpos($institution->facebook,'http://') !== false) {
+                                $facebookurl = str_replace("http://","",$institution->facebook);
+                                } else {
+                                $facebookurl = $institution->facebook;
+                                }
+                                ?>
+                                <a href="//<?php echo $facebookurl ?>" target="_blank" class="wrap socialink">
+                                    <span class="fa fa-facebook-square fa-2x"></span>
+                                    <?php //echo $institution->facebook; ?>
+                                </a>
+                            </p>
+                            <?php } if (isset($institution->twitter)  && !empty($institution->twitter)) {?>
+                            <p class="pbottom10 halign">
+                                <?php 
+                                if (strpos($institution->twitter,'https://') !== false) {
+                                $twitterurl = str_replace("https://","",$institution->twitter);
+                                } else if (strpos($institution->twitter,'http://') !== false) {
+                                $twitterurl = str_replace("http://","",$institution->twitter);
+                                } else {
+                                $twitterurl = $institution->twitter;
+                                }
+
+
+                                ?>
+                                <a href="//<?php echo $twitterurl ;?>" target="_blank" class="wrap socialink">
+                                    <span class="fa fa-twitter-square fa-2x"></span>
+                                    <?php //echo $institution->twitter; ?>
+                                </a>
+                            </p>
+                            <?php } if (isset($institution->youtube) && !empty($institution->youtube)) {?>
+                            <p class="pbottom10 halign">
+                                <?php
+                                if (strpos($institution->youtube,'https://') !== false) {
+                                $youtubeurl = str_replace("https://","",$institution->youtube);
+                                }else if (strpos($institution->youtube,'http://') !== false) {
+                                $youtubeurl = str_replace("http://","",$institution->youtube);
+                                } else {
+                                $youtubeurl = $institution->youtube;
+                                }
+                                ?>
+                                <a href="//<?php echo $youtubeurl; ?>" target="_blank" class="wrap socialink">
+                                    <span class="fa fa-youtube-play fa-2x"></span>
+                                    <?php //echo $institution->youtube; ?>
+                                </a>
+                            </p>
+                            <?php }?>
+                        </div>
+                        <?php if (isset($institution->map1) && !empty($institution->map1)) {?>
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                            <iframe src="<?php echo $institution->map1;?>" frameborder="0" style="border:0"></iframe>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+                </body>
+                </html>

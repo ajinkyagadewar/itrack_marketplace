@@ -1,0 +1,80 @@
+// This file is part of MoodleofIndia - http://moodleofindia.com/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Note class is build for Manage Notes (Create/Update/Delete)
+ * @desc Note class have one parameterized constructor to receive global 
+ *       resources.
+ * 
+ * Local Educoupons 
+ * @author     Arjun Singh <arjunsingh@elearn10.com>
+ * @package    local_educoupons
+ * @copyright  20/10/2016 lms of india
+ * @license    http://lmsofindia.com/
+ */
+/* 
+    Created on : 22 Sep, 2015, 11:41:02 AM
+    Author     : scott
+*/
+p .bottomline{
+    border-bottom:solid 1px #ccc;
+}
+.dndbtn {
+	text-align: center;
+	padding-bottom: 5px;
+}
+.modal.modal-wide .modal-dialog {
+  width: 85%;
+}
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+.modal-backdrop, .modal-backdrop.fade.in{
+	display: none;
+}
+.modal.fade.in {
+    margin-top: 10%!important;
+    height: 65%!important;
+}
+.modal-dialog {
+    width: 95%!important;
+    margin: 10px 10px!important;
+}
+.modal{
+	width:32%!important;
+}
+.modal-open .modal{
+	overflow-y: hidden!important;
+}
+
+
+.user_cplist .usrlist {
+    list-style-type: none;
+}
+
+
+.toggle.ios, .toggle-on.ios, .toggle-off.ios {
+    border-radius: 20px; 
+}
+.toggle.ios .toggle-handle { 
+    border-radius: 20px;
+}
+.usercntbld {
+    font-weight: 600;
+    border-radius: 50%;
+    padding: 0px 6px;
+    border: 2px solid #888888;
+}
+

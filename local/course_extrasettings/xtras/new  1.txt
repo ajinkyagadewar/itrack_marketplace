@@ -1,0 +1,112 @@
+  <script>
+  $(function() {   
+ var availableTags = [     
+ "ActionScript", 
+"AppleScript", 
+"Asp",      
+"BASIC",
+"C",   
+"C++",
+"Clojure",
+ "COBOL",
+ "ColdFusion", 
+"Erlang", 
+"Fortran",
+"Groovy", 
+"Haskell",
+"Java", 
+"JavaScript",
+ "Lisp",
+ "Perl"      
+   ];    $( "#id_specializations" ).autocomplete({      source: availableTags    });  });  
+</script>
+Dear Haraprasad,
+
+
+Jquery:
+$("selector").on("keyup", function(event){
+                                                
+var query = $(this).val();
+     if(query.length > 3){
+   $.post( "autocomplete.php", { mode: "user", data: query}, function( data ) { 
+                                                                                
+  searchDataStudent = data;
+                                                                                
+                                                                                
+    //First search
+    if(drewStudent == false){
+                                                                                                
+   //Create list for results
+    $("# selector ").after('<ul id="selectorSearchResult" class="searchul"></ul>');
+       //Prevent redrawing/binding of list
+        drewStudent = true;
+                                                                                                
+                                                                                                
+          //Bind click event to list elements in results
+     $("#selectorSearchResult").on("click", "li", function(){
+     $("#selector").val($(this).text());                    
+      $("#selectorSearchResult").empty();
+                                                                                                                
+                                                                                                                                                                                                
+       });
+                                                                                                
+                                                                                                
+                                                                                                
+       }else{//Clear old results  
+                                                                                
+     $("#selectorSearchResult").empty();   
+                                                                                                
+           }
+  for(term in searchDataStudent){  
+                                
+     $("#selectorSearchResult").append("<li class='searchli'>" + searchDataStudent[term] + "</li>");                                                                                       
+                                                                                }                                                                                              
+                                                                                
+   },"json");
+                                                }else if(drewStudent){//Handle backspace/delete so results don't remain with less than 3 characters
+                                                                $("#selectorSearchResult").empty();
+                                                                
+                                                }
+                                                 
+                                });
+
+PHP code:
+<?php
+require_once('../../config.php');
+
+global $DB;
+if(isset($_REQUEST)){
+                $mode = isset($_REQUEST['mode']) ? $_REQUEST['mode'] : null;
+                $data = array();
+                
+                if($mode){
+                                switch($mode){
+                                                case 'user':
+                                                                $user_name = isset($_REQUEST['data']) ? $_REQUEST['data'] : null;
+                                                                if($user_name){
+                                                                                $user_details_q = "SELECT id,firstname,lastname FROM {user} WHERE firstname LIKE '%$user_name%' OR lastname LIKE '%$user_name%' ";
+                                                                                $user_details_rs = $DB->get_records_sql($user_details_q);
+                                                                                if($user_details_rs){                                                                                       
+                                                                                                foreach($user_details_rs as $user_details){
+                                                                                                                $id = $user_details->id;
+                                                                                                                $first_name = $user_details->firstname;                                                                                                              
+                                                                                                                $last_name =  $user_details->lastname;
+                                                                                                                $data['username'] = $first_name.' '.$last_name;
+                                                                                                                
+                                                                                                                
+                                                                                                }
+                                                                                                echo json_encode($data);
+                                                                                                
+                                                                                }
+                                                                }
+                                                
+                                                                break;
+                                                
+                                }
+                }
+}
+
+Thanks and regards,
+Pratim Sarangi
+Moodle of India.
+

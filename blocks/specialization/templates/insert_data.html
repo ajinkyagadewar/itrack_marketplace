@@ -1,0 +1,91 @@
+<html>
+    <body>
+        <form action="<?php echo $CFG->wwwroot;?>/blocks/specialization/filterdata.php" method="post" id="seqform">
+            <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th class="numeric">Course Name</th>
+                        <th class="numeric">Selecet Sequence</th>
+                        <th class="numeric">Select Icon</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $myspec = $DB->get_records('block_eduopen_master_special', array('id' => $id));
+                    //if ($myspec) {
+                    foreach ($myspec as $special) {
+                    $coursedetails = $DB->get_records_sql("SELECT * FROM 
+                    {course_extrasettings_general} WHERE
+                    specializations @@ to_tsquery('$special->id')  AND coursestatus=1");
+                    foreach ($coursedetails as $detailscourse) {
+                    $coursesetting = $DB->get_records('course', array('id' => $detailscourse->courseid));
+                    foreach ($coursesetting as $csetting) {
+                    $courseid = $csetting->id;
+                    $cname = $csetting->fullname;
+
+                    ?>
+                    <tr>
+                        <td class="numeric" id="courseid_<?php echo $courseid;?>">
+                            <a href="<?php echo $CFG->wwwroot.'/eduopen/course_details.php?courseid='.$courseid; ?>">
+                                <?php echo $cname; ?>
+                            </a>
+                        </td>
+                        <td class="numeric">
+                            <select id="seq_<?php echo $courseid; ?>" name="sequence[<?php echo $courseid; ?>]">
+                                <?php
+                                $seqid = $DB->get_records_sql("SELECT sequence  FROM {eduopen_special_course_seq} WHERE 
+                                specializationid=$id and courseid=$courseid");
+                                for ($i = 1; $i <= 20; $i++) {
+                                ?>							
+                                <option value="<?php echo $i;?>" 
+                                        <?php echo $seqid[$i]->sequence == $i ? "selected='selected'" : "";?> ><?php echo $i;?>
+                            </option>';
+                            <?php } ?>
+                        </select>
+                    </td>			
+                    <td class="numeric" >
+                        <?php
+                        $seqid = $DB->get_records_sql("SELECT icontype  FROM {eduopen_special_course_seq} WHERE 
+                        specializationid=$id and courseid=$courseid");
+                        //var_dump($seqid);
+                        $tmp = array();
+                        $itr = 0;
+                        foreach ($seqid as $key => $val)
+                        $tmp[] = $key;
+                        ?>
+                        <select id="icon_<?php echo $courseid; ?>" name="icon[<?php echo $courseid; ?>]">
+                            <option value="Normal" <?php echo $tmp[0]=='Normal' ? "selected='selected'" : "";?> 
+                                    id="icon1">Normal</option>
+                            <option value="Milestone" <?php echo $tmp[0]=='Milestone' ? "selected='selected'" : "";?> 
+                                    id="icon2">Milestone</option>
+                            <option value="Capstone" <?php echo $tmp[0]=='Capstone' ? "selected='selected'" : "";?> 
+                                    id="icon3">Capstone</option>
+                        </select>
+                    </td>
+                </tr>
+                <?php }}} ?>
+            </tbody>
+        </table>
+        <?php
+        $myspec = $DB->get_records('block_eduopen_master_special', array('id' => $id));
+        foreach ($myspec as $special) {
+        $coursedetails = $DB->get_records_sql("SELECT * FROM {course_extrasettings_general} WHERE 
+        specializations @@ to_tsquery('$special->id') AND coursestatus=1");
+        //$i=1;
+        foreach ($coursedetails as $detailscourse) {
+        $coursesetting = $DB->get_records('course', array('id' => $detailscourse->courseid));
+        foreach($coursesetting as $csetting){
+        $courseid = $csetting->id;
+        //var_dump($courseid);
+        //$cname = $csetting->fullname;
+        ?>
+
+        <input type="hidden" name="specilization_id"  value="<?php echo $id; ?>">
+        <input type="hidden" name="courseid[]" id="coursee_ids" value="<?php echo $courseid; ?>">
+        <?php }}} ?>
+        <div class="submit_but">
+            <input type="submit" id="submit" value="<?php echo get_string('add_seq', 'block_specialization'); ?>" />
+        </div>
+    </form>
+</body>
+</html>

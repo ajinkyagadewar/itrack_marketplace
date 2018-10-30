@@ -1,0 +1,91 @@
+<html>
+    <body>
+        <div class="container-fluid">
+            <br>
+            <section id="#Mission">
+                <div class="row-fluid">
+                    <div class="col-md-12 col-sm-12 col-xs-12 nopadding row1">
+
+                        <h1 class="head-1"> <?php echo get_string('earninstitutional', 'theme_eduopen'); ?> </h1>
+
+                    </div><!--end of row1-->
+                </div><!--end of row-->
+                <br><br>
+                <hr class="hr1">
+                <br><br>
+                <div class="row-fluid">
+                    <div class="col-md-12 col-sm-12 col-xs-12 nopadding mission">
+
+                        <p class="head-1"> <?php echo get_string('earninstitutionaldesc', 'theme_eduopen'); ?></p>
+
+                    </div><!--end of mission-->
+                </div><!--end of row-->
+                <br><br>
+            </section>
+            <hr>
+            <section id="#Works">
+                <br><br>
+                <div class="row-fluid">
+                    <div class="col-md-12 col-sm-12 col-xs-12 nopadding row2">
+
+                        <h1 class="head-1"> <?php echo get_string('howworks', 'theme_eduopen'); ?></h1>
+
+                    </div><!--end of row2-->
+                </div><!--end of row-->
+                <br><br>
+                <hr class="hr1">
+                <div class="row-fluid">
+                    <br><br>
+                    <div class="row-fluid">
+                        <div class="col-md-12 col-sm-12 col-xs-12 nopadding mid">
+                            <div class="col-md-3 col-sm-1 col-xs-1"></div>
+                            <div class="col-md-6 col-sm-10 col-xs-10">
+                                <p class="head-3"> <?php echo get_string('howworksdesc', 'theme_eduopen'); ?></p>
+
+                            </div>
+                            <div class="col-md-3 col-sm-1 col-xs-1"></div>
+                        </div><!--end of mid-->
+                    </div>
+                    <br><br><br><br>
+                    <div class="row-fluid">
+                        <div class="col-md-12 col-sm-12 col-xs-12 dis_course">
+                            <?php if ($img1) { ?>
+                            <div class="col-md-4 col-sm-6 col-xs-12 nopadding">
+                                <?php echo "<img src='".$PAGE->theme->setting_file_url('image1', 'image1')."' class='img-responsive img-thumbnail' alt='image1'/>";?>
+                            </div>
+                            <?php } ?>
+                            <div class="col-md-8 col-sm-6 col-xs-12 nopadding">
+                                <div class="col-md-12 col-sm-12 col-xs-12 pad0A">
+                                    <h3 class="abtcomcs"><?php echo get_string('discovercourseandsignup', 'theme_eduopen'); ?></h3>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 pad0A">
+                                    <p class="head-3"> <?php echo get_string('discovercourseandsignupdesc', 'theme_eduopen'); ?></p>
+                                </div>
+                            </div>
+                        </div><!--end of dis_course-->
+                    </div>
+                    <br><br><br>
+                    <div class="row-fluid">
+                        <div class="col-md-12 col-sm-12 col-xs-12 learn_schdl">
+                            <div class="col-md-8 col-sm-6 col-xs-12 nopadding">
+                                <div class="col-md-12 col-sm-12 col-xs-12 pad0A">
+                                    <h3 class="abtcomcs"><?php echo get_string('learnonyourownschedule', 'theme_eduopen'); ?></h3>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 pad0A">
+                                    <p class="head-3"> <?php echo get_string('learnonyourownscheduledesc', 'theme_eduopen'); ?></p>
+                                </div>
+                            </div>
+                            <?php if ($img2) { ?>
+                            <div class="col-md-4 col-sm-6 col-xs-12 nopadding">
+                                <?php echo "<img src='".$PAGE->theme->setting_file_url('image2', 'image2')."' class='img-responsive img-thumbnail' alt='image2'/>";?>
+                            </div>
+                            <?php } ?>
+                        </div><!--end of learn_schdl-->
+                    </div>
+                    <br><br><br>
+                </div>  
+            </section>
+            <br><br>
+        </div><!--end of container main-content-->
+    </body>
+</html>

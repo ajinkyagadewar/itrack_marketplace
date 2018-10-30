@@ -1,0 +1,1109 @@
+<html>
+    <body>
+        <?php
+        $cssetting = $DB->get_record('course', array('id' => $id));
+        //foreach ($coursesetting as $cssetting) {
+        $exsetting = $DB->get_records('course_extrasettings_general', array('courseid' => $cssetting->id));
+        foreach ($exsetting as $allsetting) {
+        $cost = $allsetting->cost;
+        $coursesummary = $allsetting->syllabus;
+        if (!$cost || $cost == '' || $cost == 0) {
+        $cost = 'Cost';
+        } else {
+        $cost = $allsetting->currency.'&nbsp'.''.$cost;
+        }
+        $instlogo = $DB->get_records('block_eduopen_master_inst', array('id' => $allsetting->institution));
+        foreach ($instlogo as $logoinst) {
+        $logo1 = cinstitution_logo($logoinst);
+        $intname = $logoinst->name;
+        $intid = $logoinst->id;
+        $courseimg = csetting_images($allsetting);
+        $defaultcourseimage = $CFG->wwwroot.'/theme/eduopen/pix/default_course.png';
+        $courseimg = $courseimg ? $courseimg : $defaultcourseimage;
+        $certificate = certificate_images($allsetting);
+        ?>
+        <div class="container-fluid">
+            <div class="row-fluid Course-details">
+                <div class="col-md-12">
+                    <?php if ($logo1) { ?>
+                    <a href="<?php echo $CFG->wwwroot.'/eduopen/institution_details.php?institutionid='.$intid ; ?>" 
+                       title="Go to Institution">
+                        <img src="<?php echo $logo1 ; ?>" class="img-responsive">
+                    </a>
+                    <?php } ?>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <hr class="hrLn">
+                    </div>
+                </div>
+                <div class="col-md-12 nopadding row1">
+                    <div class="col-md-12 pad0A">
+
+                        <div class="col-md-12">
+                            <div class="videoUrl"><?php echo $allsetting->videourl;?></div>
+
+                            <!--sj-->
+                            <h1 class="eduopen-link cours_hd coursedetailsh1"><?php echo strip_tags($allsetting->engtitle); ?></h1>
+                            <!--<h2 class="eduopen-link cours_hd">
+                                <?php //echo $cssetting->fullname .' - <b class="cdate">'.$coursestart; ?>
+                            </h2>-->
+                            <?php
+                            $splid = $allsetting->specializations;
+                            if ($splid != 'none') {
+                            $specializationid = explode(',', $splid );
+                            if ($specializationid) {
+                            ?>
+                            <p><?php echo get_string('partofthe', 'theme_eduopen'); ?></p>
+                            <?php
+                            for ($i = 0; $i < count($specializationid); $i++) {
+                            $specialdata = $DB->get_record('block_eduopen_master_special', array('id' => $specializationid[$i]), 'name');
+                            ?>
+                            <h3 class="pathname">
+                                <a class="eduopen-link coursedetailsh3" href="<?php echo $CFG->wwwroot.'/eduopen/pathway_details.php?specialid='.$specializationid[$i]; ?>"> 
+                                    <?php echo get_string('spzin', 'theme_eduopen');?>
+                                    <strong><?php echo strip_tags($specialdata->name);?></strong> 
+                                </a> 
+                            </h3>
+                            <?php
+                            }
+                            }
+                            }
+                            ?>
+                            <p><br></p>
+                            <div class="sdfg">
+                                <h3 class="eduopen-link coursedetailsh3">
+                                    <img class="pathlangflag img-responsive" 
+                                         src="<?php echo $CFG->wwwroot.'/theme/eduopen/pix/countryflag/svg/en.png' ?>">
+                                    <?php echo get_string('aboutthecourseEn', 'theme_eduopen'); ?>
+                                </h3>
+                                <span><?php echo $coursesummary; ?></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!--end of row1-->
+        </div><!--end of row-->
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <hr class="horLin">
+            </div>
+        </div>
+        <!--The course title comes from course edit settings sj-->
+        <div class="row-fluid" >
+            <div class="col-md-12 nopadding">
+                <h1 class="eduopen-link cfullnm coursedetailsh1">
+                    <?php echo $cssetting->fullname; ?>
+                </h1>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="col-md-12 nopadding row2">
+                <div class="col-md-8 col21 course-page-details">
+                    <?php if ($allsetting->whatsinside) { ?>
+                    <h3 class="eduopen-link coursedetailsh3">
+                        <img class="pathlangflag img-responsive" 
+                             src="<?php echo $CFG->wwwroot.'/theme/eduopen/pix/countryflag/svg/it.png' ?>">
+                        <?php echo get_string('aboutthecourseIt', 'theme_eduopen'); ?>
+                    </h3>
+                    <p><span><?php echo strip_tags($allsetting->whatsinside);?></span></p>
+                    <?php
+                    }
+                    ?>
+                    <?php if ($allsetting->audience) { ?>
+                    <h3 class="eduopen-link coursedetailsh3">
+                        <?php echo get_string('audience', 'local_course_extrasettings'); ?>
+                    </h3>
+                    <p><span><?php echo $allsetting->audience;?></span></p>
+                    <?php } ?>
+                    <?php if ($allsetting->recommendedbackground) { ?>
+                    <h3 class="eduopen-link coursedetailsh3">
+                        <?php echo get_string('recommendedbackground', 'theme_eduopen'); ?>
+                    </h3>
+                    <span><?php echo strip_tags($allsetting->recommendedbackground);?></span>
+                    <?php } ?>  
+                    <?php if ($allsetting->textbook) { ?>
+                    <h3 class="eduopen-link coursedetailsh3">
+                        <?php echo get_string('textbook', 'local_course_extrasettings'); ?>
+                    </h3>
+                    <span><?php echo $allsetting->textbook;?></span>
+                    <?php } ?>
+                    <?php if ($allsetting->crecruitments) { ?>
+                    <h3 class="eduopen-link coursedetailsh3">
+                        <?php echo get_string('courseformat', 'theme_eduopen'); ?>
+                    </h3>
+                    <p><span><?php echo strip_tags($allsetting->crecruitments);?></span></p>
+                    <?php } ?>
+                    <!-- All Certificate Section-->
+                    <?php 
+
+                    //var_dump($allsetting);
+                    if (($allsetting->examrule1) or ($allsetting->examrule2) or ($allsetting->examrule)) { ?>
+                    <h3 class="eduopen-link coursedetailsh3">
+                        <?php echo get_string('certificate_section', 'local_course_extrasettings'); ?>
+                    </h3>
+
+                    <div class="row-fluid">
+                        <div class="col-md-12" id="c-all-cert">
+                            <div class="col-md-12 cert-back-color">
+                                <!-- Attendance Certificate Rule-->
+                                <?php if (strip_tags($allsetting->examrule1)) { ?>
+                                <div class="all-rule">
+                                    <p class="eduopen-link coursedetailsh4">
+                                        <?php echo get_string('att_cert', 'local_course_extrasettings'); ?>
+                                    </p>
+                                    <span><?php echo strip_tags($allsetting->examrule1);?></span>
+                                </div>
+                                <?php } ?>
+                                <!-- Verified Certificate Rule-->
+                                <?php if (strip_tags($allsetting->examrule2)) { ?>
+                                <div class="all-rule">
+                                    <p class="eduopen-link coursedetailsh4">
+                                        <?php echo get_string('verify_cert', 'local_course_extrasettings'); ?>
+                                    </p>
+                                    <span><?php echo strip_tags($allsetting->examrule2);?></span>
+                                </div>
+                                <?php } ?>
+                                <!-- Exam Certificate Rule-->
+                                <?php if ((strip_tags($allsetting->examrule)) != '') { ?>
+                                <div class="all-rule">
+                                    <p class="eduopen-link coursedetailsh4">
+                                        <?php echo get_string('exam_cert', 'local_course_extrasettings'); ?>
+                                    </p>
+                                    <span><?php echo strip_tags($allsetting->examrule);?></span>
+                                </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <!--  End of All Certificate Section-->
+
+                    <!-- if section is present only then show this -->
+                    <?php
+                    global $CFG, $DB;
+                    // require_once('../lib.php');
+                    $course1 = $_REQUEST['courseid'];
+                    $csectionq1 = "SELECT section, name, summary,
+                    sequence from {course_sections} where sequence !='' and course=$course1 and section !=0 and name!='' ORDER BY section";
+                    $recsec1 = $DB->get_records_sql($csectionq1);
+                    if ($recsec1) {
+                    ?>
+                    <!-- course activities syllabus  coursesyllabus-->
+                    <div class="row-fluid">
+                        <div class="col-md-12 pad0A">
+                            <div class="col-md-9 col-sm-6 col-xs-6 pad0A eduopen-link">
+                                <h3 class="coursedetailsh3"><?php echo get_string('syllabus', 'theme_eduopen'); ?></h3>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6 pad0A">
+                                <header class="syll_head">
+                                    <h3 class="pull-right CourseToggle">
+                                        <a id="ChevronIcon">
+                                            <?php echo get_string('coursesyl', 'theme_eduopen') ?>
+                                        </a>&nbsp;
+                                        <i class="fa fa-chevron-down cdetail-plus-align"></i>
+                                    </h3>
+                                </header>
+                            </div>
+                        </div>
+                    </div>
+                    <section class=" "><!--extra-->
+                        <?php
+                        //foreach($recsec1 as $recsec2){
+                        //if($recsec2->name != '' or $recsec2->name != NULL){ ?>
+
+                        <?php //} }
+                        } else { ?>
+                        <section class=" ">
+                            <?php
+                            }
+                            ?>
+                            <!-- added by Mihir for section and activity 22nd apr -->
+                            <div class="col-md-12 pad0A">
+                                <div class="curriculam">
+                                    <!-- get the section and its content -->
+                                    <?php
+                                    // require_once(dirname(__FILE__) . '/../../config.php');
+                                    global $CFG, $DB;
+                                    // require_once('../lib.php');
+                                    $course = $_REQUEST['courseid'];
+                                    $modinfo = get_fast_modinfo($course);
+                                    //var_dump($modinfo);
+                                    $csectionq = "SELECT section, name, summary, sequence from
+                                    {course_sections} where sequence !='' and course=$course and section !=0 ORDER BY section";
+                                    $recsec = $DB->get_records_sql($csectionq);
+
+                                    $zz = 1;
+                                    if ($recsec) {
+                                    foreach ($recsec as $recseci2) {
+                                    $cminput1 = '';
+                                    $uptocm = 0;
+                                    $cminput1 = $recseci2->sequence;
+                                    $cmsum = strip_tags($recseci2->summary);
+                                    $secname = strip_tags($recseci2->name);
+                                    $secstart = $recseci2->section;
+                                    $cmnexplode = explode( ',', $cminput1 );
+                                    $uptocm = count($cmnexplode);
+                                    $uptocm2 = $uptocm - 1;
+                                    $temp1 = array();
+                                    for ($j = 0; $j <= $uptocm2; $j++) {
+                                    $cmtoid = $cmnexplode[$j];
+                                    $cm = $modinfo->get_cm($cmtoid);
+                                    if ($cm->modname == 'eduplayer') {
+                                    $temp1[] = $cm->modname;
+                                    }
+                                    }
+                                    ?>
+                                    <?php if (($secname != '') || ($secname != NULL)) { ?>
+                                    <div class="infobox infobox-close-wrapper cdetailsa-bg">
+                                        <section class="panel" id="activitypanel">
+                                            <?php if (isset($temp1) && !empty($temp1)) { ?>
+                                            <header class="panel-heading">
+                                                <?php  echo $secname; ?>
+                                                <span class="tools pull-right">
+                                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                                </span>
+                                            </header>
+                                            <?php } ?>
+                                            <div class="panel-body activity">
+                                                <?php if ($cmsum != '') { ?>
+                                                <p><?php echo $cmsum;?></p>
+                                                <br>
+                                                <?php } ?>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <?php
+                                                        // Code updated by shiuli on 30th Sep for lesson validation.
+                                                        $temp = array();
+                                                        for ($j = 0; $j <= $uptocm2; $j++) {
+                                                        $cmtoid = $cmnexplode[$j];
+                                                        $cm = $modinfo->get_cm($cmtoid);
+                                                        if ($cm->modname == 'eduplayer') {
+                                                        $temp[] = $cm->modname;
+                                                        }
+                                                        }
+                                                        if (!empty($temp)) {
+                                                        echo '<p id="lessons_nm">'.
+                                                        get_string('lessonname', 'theme_eduopen').'</p>';
+                                                        }
+                                                        ?>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        for ($j = 0; $j <= $uptocm2; $j++) {
+                                                        $cmtoid = $cmnexplode[$j];
+                                                        $cm = $modinfo->get_cm($cmtoid);
+                                                        $srno = $j+1;
+                                                        $linkurl = $CFG->wwwroot.'/mod/'.$cm->modname.'/view.php?id='.$cm->id;
+                                                        //var_dump($cm->modname);
+                                                        if ($cm->modname == 'eduplayer') {
+
+                                                        ?>
+                                                        <tr>
+                                                            <td>
+                                                                <?php
+                                                                if ($cm->modname == 'eduplayer')  {
+                                                                $modulname =  $cm->name;
+                                                                }
+                                                                ?>
+                                                                <span class="col-md-1 col-sm-1 col-xs-2 pad0A" id ="eduth">
+                                                                    <?php
+                                                                    if ($cm->modname == 'eduplayer') {
+                                                                    $thumburl = $cm->get_icon_url();
+                                                                    }
+
+                                                                    ?>
+                                                                    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+
+                                                                    <!--  <img class="img-responsive" src="<?php echo $thumburl; ?>"></img> -->
+                                                                </span>
+                                                                <span class="col-md-11 col-sm-11 col-xs-10 pad0A">
+                                                                    <?php
+                                                                    echo $modulname;
+                                                                    ?>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <?php }} ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <?php } ?> <!-- end of infobox -->
+                                    <?php } // end of if sec 
+                                    } // end of foreach sec
+                                    ?> 
+                                </div> <!-- end of curriculam class --> 
+                            </div><!-- end of Mihir -->
+                        </section> 
+                        <!--FAQ section starts-->
+                        <?php
+                        $faqsetid = $DB->get_records_sql("SELECT efd.question, efd.answer FROM {eduopen_faq} ef
+                        JOIN {eduopen_faq_details} efd ON ef.id = efd.id
+                        where ef.elementid = ?", array($id )); 
+                        if ($faqsetid) {
+                        ?>
+                        <h3 class="eduopen-link coursedetailsh3"><?php echo get_string('faq', 'theme_eduopen'); ?></h3>
+                        <?php
+                        foreach ($faqsetid as $faqdetails) {
+                        ?>
+                        <section class="panel faqs">
+                            <header class="panel-heading txtoptm">
+                                <?php echo $faqdetails->question;?>
+                                <span class="tools pull-right pad10b">
+                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                </span>
+                            </header>
+                            <div class="panel-body">
+                                <p><?php echo strip_tags($faqdetails->answer);?></p>
+                            </div>
+                        </section>
+                        <?php } } ?><!--End faq section-->
+                </div><!-- end of col-md-8--><!--end of course-page-details-->
+                <!-- Course Sidebar -->
+                <div class="col-md-4 col22 course-sidebar">
+                    <!--End of Upcoming/Coming Soon/Current buttons --> 
+                    <?php
+                    // starts of CLC(COurse Life Cycle).
+                    // For All.
+                    // If crsclosed is not set then set it to 31/12/2050.
+                    if ($allsetting->crsclosed == 0) {
+                    $courseClosed = $allsetting->crsclosed + 2556100799;
+                    } else {
+                    $courseClosed = $allsetting->crsclosed;
+                    }
+                    if ($allsetting->enrolstop == 0) {
+                    $enrolStop = $allsetting->enrolstop + 2556100799;
+                    } else {
+                    $enrolStop = $allsetting->enrolstop;
+                    }
+
+                    $cenrol = single_course_enrolment($id);
+                    $btnText = '<p class="primaryTxt">'.$cenrol['primaryText'].'</p>
+                    <p class="secondaryTxt">'.$cenrol['secondaryText'].'</p>';
+                    ?>
+                    <div class="sel2 <?php echo $cenrol['bgcolor']; ?>">
+                        <a href="<?php echo $cenrol['courselink'];?>" class=" btn btn-block btn-primary">
+                            <?php echo $btnText; ?>
+                        </a>
+                    </div>
+                    <!--If time()>T6 and < T7-->
+                    <?php
+                    if ($allsetting->nexteditiondate != 0) {
+                    if ((time() > $courseClosed) && (time() < $allsetting->nexteditiondate)) { ?>
+                    <div class="sel2 cenrol_green nextedit">
+                        <a href="#" class=" btn btn-block btn-primary">
+                            <?php 
+                            $btnTextnext = '<p class="primaryTxt">'.
+                            get_string('crsenrol_ptext_nextedition', 'local_courselifecycle').
+                            '</p>
+                            <p class="secondaryTxt">'.
+                            user_cumstom_date($allsetting->nexteditiondate).'</p>';
+                            echo $btnTextnext;
+                            ?>
+                        </a>
+                    </div>
+                    <?php } } ?>
+                    <!--End of Upcoming/Coming Soon/Current buttons --> 
+
+                    <!-- Course at glance starts -->
+                    <h3 class="eduopen-link coursedetailsh3">
+                        <?php echo get_string('courseataglance', 'theme_eduopen'); ?>
+                    </h3>
+
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-6 pad0A">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa fa-cog" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('crsmode', 'local_courselifecycle');?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <?php
+                                $cmode = ($allsetting->coursemode == 1) ?
+                                get_string('crsmode-tutored', 'local_courselifecycle'): 
+                                get_string('crsmode-selfed', 'local_courselifecycle');
+                                echo $cmode;
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-6 pad0A">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa fa-hand-o-right" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('crsstatus', 'local_courselifecycle');?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <?php
+                                $cstatus = coursedetails_course_status($id);
+                                echo $cstatus['coursestatus']; 
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-12 pad0A">
+                                <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                    <span class="fa fa-clock-o" ></span>
+                                </div>
+                                <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                    <?php echo get_string('Duration', 'theme_eduopen'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <?php
+                            // If there is no new duraionweek then show old duration.
+                            if (isset($allsetting->durationweek) && !empty($allsetting->durationweek)) {
+                            $crsduration = $allsetting->durationweek . ' ' . get_string('duration_week', 'theme_eduopen');
+                            } else {
+                            $crsduration = $allsetting->length;
+                            }
+                            echo $crsduration;
+                            ?>
+                        </div>
+                    </div>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-12 pad0A">
+                                <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                    <span class="fa fa-tachometer" ></span>
+                                </div>
+                                <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                    <?php echo get_string('effort', 'theme_eduopen'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <?php
+                            // If there is no new estimeatedweek then show old duration.
+                            if (isset($allsetting->estimatedweek) && !empty($allsetting->estimatedweek)) {
+                            $crsestimated = $allsetting->estimatedweek . ' ' . get_string('estimated_week', 'theme_eduopen');
+                            } else {
+                            $crsestimated = $allsetting->estimated;
+                            }
+                            echo $crsestimated;
+                            ?>
+                        </div>
+                    </div>
+                    <?php if ($allsetting->totalduration != 0) { ?>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-12 pad0A">
+                                <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                    <span class="fa fa-clock-o" ></span>
+                                </div>
+                                <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                    <?php echo get_string('training_hours', 'theme_eduopen'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <?php echo $allsetting->totalduration; ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-12 pad0A">
+                                <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                    <span class="fa fa-cogs"></span>
+                                </div>
+                                <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                    <?php echo get_string('categ', 'theme_eduopen'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <?php
+                            $categoryresultset = $DB->get_record('course', array('id' => $id), 'category');
+                            $categoryid = $categoryresultset->category;
+                            $categoryname = get_active_catname($categoryresultset->category);
+                            echo $categoryname;
+                            ?>
+                        </div>
+                    </div>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-12 pad0A">
+                                <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                    <span class="fa fa-comment-o"></span>
+                                </div>
+                                <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                    <?php echo get_string('langua', 'theme_eduopen'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <?php
+                            $language = $allsetting->language;
+                            $lang = get_string_manager()->get_list_of_translations();
+                            foreach ($lang as $key => $value) {
+                            if ($key == $language) {
+                            $languages = $value;
+                            }
+                            }
+                            $resultLang = explode(' (', $languages);
+                            // 11. When IT and a course is in English as language write Inglese.
+                            // 10. When EN and a course is in italian as language write italian
+                            if (current_language() == 'en') {
+                            if ($allsetting->language == 'it') {
+                            $clang = get_string('crs_italian', 'theme_eduopen');
+                            } else {
+                            $clang = $resultLang[0];
+                            }
+                            } else if (current_language() == 'it') {
+                            if ($allsetting->language == 'en') {
+                            $clang = get_string('crs_inglese', 'theme_eduopen');
+                            } else {
+                            $clang = $resultLang[0];
+                            }
+                            }
+                            echo $clang;
+                            ?>
+                        </div>
+                    </div>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-12 pad0A">
+                                <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                    <span class="fa fa-life-ring" ></span>
+                                </div> 
+                                <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                    <?php echo get_string('crstype', 'theme_eduopen'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <?php
+                            if (current_language() == 'it') {
+                            if ($allsetting->coursetype == 'Online') {
+                            $ctype = get_string('ctype_Online', 'theme_eduopen');
+                            } else if ($allsetting->coursetype == 'Classroom') {
+                            $ctype = get_string('ctype_Classroom', 'theme_eduopen');
+                            } else {
+                            $ctype = get_string('ctype_Blended', 'theme_eduopen');
+                            }
+                            } else {
+                            $ctype = $allsetting->coursetype;
+                            }
+                            echo $ctype;
+                            ?>
+                        </div>
+                    </div>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-12 pad0A">
+                                <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                    <span class="fa fa-cubes" ></span>
+                                </div>
+                                <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                    <?php echo get_string('crslevel', 'theme_eduopen'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <?php
+                            if (current_language() == 'it') {
+                            if ($allsetting->courselevel == 'Beginner') {
+                            $clevel = get_string('clevel_Beginner', 'theme_eduopen');
+                            } else if ($allsetting->courselevel == 'Intermediate') {
+                            $clevel = get_string('clevel_Intermediate', 'theme_eduopen');
+                            } else {
+                            $clevel = get_string('clevel_Advanced', 'theme_eduopen');
+                            }
+                            } else {
+                            $clevel = $allsetting->courselevel;
+                            }
+                            echo $clevel;
+                            ?>
+                        </div>
+                    </div>
+                    
+                    <!-- End of course at glance -->
+
+                    <!-- Course Agenda starts -->
+                    <?php if ($allsetting->syncstatus != 0) { ?>
+                    <h3 class="eduopen-link coursedetailsh3">
+                        <?php echo get_string('crsAgenda', 'local_courselifecycle'); ?>
+                    </h3>
+                    <?php
+                    $t0 = ($allsetting->enrolstart == 0) ? 
+                    get_string('notAvailable', 'local_courselifecycle'):
+                    user_cumstom_date($allsetting->enrolstart);
+
+                    $t1 = ($allsetting->crsopen == 0) ? 
+                    get_string('notAvailable', 'local_courselifecycle'):
+                    user_cumstom_date($allsetting->crsopen);
+
+                    $t2 = ($allsetting->tutoringstart == 0) ? 
+                    get_string('notAvailable', 'local_courselifecycle'):
+                    user_cumstom_date($allsetting->tutoringstart);
+
+                    $t3 = ($allsetting->tutoringstop == 0) ? 
+                    get_string('notAvailable', 'local_courselifecycle'):
+                    user_cumstom_date($allsetting->tutoringstop);
+
+                    $t5 = ($allsetting->enrolstop == 0) ? 
+                    get_string('notAvailable', 'local_courselifecycle'):
+                    user_cumstom_date($allsetting->enrolstop);
+
+                    $t6 = ($courseClosed == 2556100799) ? 
+                    get_string('notSet', 'local_courselifecycle'):
+                    user_cumstom_date($courseClosed);
+
+                    $t7 = ($allsetting->nexteditiondate == 0) ? 
+                    get_string('notAvailable', 'local_courselifecycle'):
+                    user_cumstom_date($allsetting->nexteditiondate);
+                    ?>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-8 col-sm-6 col-xs-6 pad0A">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa-calendar-o" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('cagenda_t0', 'local_courselifecycle');?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6 pad0A">
+                                <?php echo $t0; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-8 col-sm-6 col-xs-6 pad0A">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa-calendar-o" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('cagenda_t1', 'local_courselifecycle');?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6 pad0A">
+                                <?php echo $t1; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    // If sync status is forwrd then only show below things.
+                    if ($allsetting->syncstatus == 1) {
+                    ?>
+                    <?php  if ($allsetting->coursemode == 1) { ?>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-8 col-sm-6 col-xs-6 pad0A">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa-calendar-o" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('cagenda_t2', 'local_courselifecycle');?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6 pad0A">
+                                <?php echo $t2; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-8 col-sm-6 col-xs-6 pad0A">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa-calendar-o" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('cagenda_t3', 'local_courselifecycle');?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6 pad0A">
+                                <?php echo $t3; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    ?>
+                    <?php
+                    if ($allsetting->coursemode == 1) {
+                    if ($allsetting->crsmaintenance == 1) {
+                    $soft_From = get_string('softtutoringFrom', 'local_courselifecycle');
+                    } else {
+                    $soft_From = get_string('selfpacedFrom', 'local_courselifecycle');
+                    }
+                    }
+                    if ($allsetting->coursemode == 1) {
+                    ?>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-8 col-sm-6 col-xs-6 pad0A">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa-calendar-o" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo $soft_From;?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6 pad0A">
+                                <?php
+                                $fromdate = user_cumstom_date(($allsetting->tutoringstop + 24 * 60 * 60));
+                                $softFromDate = ($allsetting->tutoringstop == 0) ?
+                                get_string('notAvailable', 'local_courselifecycle') : $fromdate;
+                                echo $softFromDate;
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php
+                    if ($allsetting->enrolstop != 0) {
+                    ?>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-8 col-sm-6 col-xs-6 pad0A">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa-calendar-o" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('cagenda_t5', 'local_courselifecycle');?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6 pad0A">
+                                <?php echo $t5; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-8 col-sm-6 col-xs-6 pad0A">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa-calendar-o" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php
+                                        // if course closed or arcghived then write 'Course Closed' or 'Course Closes'.
+                                        if ((time() > $courseClosed) || ($allsetting->coursestatus == 0)) {
+                                        echo get_string('cagenda_t6b', 'local_courselifecycle');
+                                        } else {
+                                        echo get_string('cagenda_t6a', 'local_courselifecycle');
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6 pad0A">
+                                <?php echo $t6; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    if ($allsetting->nexteditiondate != 0) {
+                    ?>
+                    <div class=" wk-progress pf-status">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-8 col-sm-6 col-xs-6 pad0A">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa-calendar-o" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('cagenda_t7', 'local_courselifecycle');?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6 pad0A">
+                                <?php echo $t7; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php } ?>
+                    <?php } ?>
+                    <!--course agenda ends-->
+
+                    <div id="cd_sidebar_cert">
+                        <h3 class="coursedetailsh3"><?php echo get_string('atncert', 'theme_eduopen'); ?></h3>
+                        <?php
+                        if ($allsetting->cost != 0) {
+                        $cost = $allsetting->currency.' '.$allsetting->cost;
+                        } else {
+                        $cost = get_string('fee-free', 'theme_eduopen');
+                        }
+                        ?>
+                        <div class=" wk-progress pf-status">
+                            <div class="col-md-8 col-sm-6 col-xs-6">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa fa-book" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('browsebyattendence_fee', 'theme_eduopen'); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6">
+                                <?php echo $cost; ?>
+                            </div>
+                        </div>
+
+                        <?php
+                        if ($allsetting->certificate1) {
+                        if ($allsetting->costforattendance != 0) {
+                        $attendancecost = $allsetting->currency.' '.$allsetting->costforattendance;
+                        } else {
+                        $attendancecost = get_string('fee-free', 'theme_eduopen');
+                        }
+                        ?>
+                        <div class=" wk-progress pf-status">
+                            <div class="col-md-8 col-sm-6 col-xs-6">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa fa-certificate" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('att_cert', 'local_course_extrasettings'); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6">
+                                <?php echo $attendancecost; ?>
+                            </div>
+                        </div>
+                        <?php } ?>
+
+                        <?php
+                        if ($allsetting->certificate2) {
+                        if ($allsetting->vcostforattendance != 0) {
+                        $verifiedcost = $allsetting->currency.' '.$allsetting->vcostforattendance;
+                        } else {
+                        $verifiedcost = get_string('fee-free', 'theme_eduopen');
+                        }
+                        ?>
+                        <div class=" wk-progress pf-status">
+                            <div class="col-md-8 col-sm-6 col-xs-6">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <img class="all_ban_img" src="<?php echo $CFG->wwwroot.'/theme/eduopen/pix/verified.svg'; ?>">
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('verify_cert', 'local_course_extrasettings'); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6">
+                                <?php echo $verifiedcost; ?>
+                            </div>
+                        </div>
+                        <?php } ?>
+
+                        <?php
+                        if ($allsetting->certificate) {
+                        if ($allsetting->costforformalcredit != 0) {
+                        $examcost = $allsetting->currency.' '.$allsetting->costforformalcredit;
+                        } else {
+                        $examcost = get_string('fee-free', 'theme_eduopen');
+                        }
+                        ?>
+                        <div class=" wk-progress pf-status">
+                            <div class="col-md-8 col-sm-6 col-xs-6">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <img class="all_ban_img" src="<?php echo $CFG->wwwroot.'/theme/eduopen/pix/exam.jpg'; ?>">
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('exam_cert', 'local_course_extrasettings'); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6">
+                                <?php echo $examcost; ?>
+                            </div>
+                        </div>
+                        <?php } ?>
+
+                        <?php if ($allsetting->credits != 0) { ?>
+                        <div class=" wk-progress pf-status lpf">
+                            <div class="col-md-8 col-sm-6 col-xs-6">
+                                <div class="col-md-12 pad0A">
+                                    <div class="col-md-2 col-sm-1 col-xs-3 pad0A">
+                                        <span class="fa fa-graduation-cap" ></span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-11 col-xs-9 pad0A">
+                                        <?php echo get_string('creditpoint', 'theme_eduopen');?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6">
+                                <?php echo $allsetting->credits; ?>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                    <br>
+                    <?php // If certificate Image presents, then only show this section.
+                    if (($allsetting->certificatedownload1 =='1') or ($allsetting->certificatedownload2 == '1') or ($allsetting->certificatedownload == '1')) { ?>
+                    <div id="certimage">
+                        <?php if ($certificate1 or $certificate2 or $certificate) { ?>
+                        <h3><?php echo get_string('certificate_image', 'local_course_extrasettings'); ?></h3>
+                        <hr>
+                        <?php } ?>
+                        <!--Attendence Certificate-->
+                        <?php
+                        if ($allsetting->certificate1 == 1) {
+                        $certificate1 = certificate_images1($allsetting);
+                        if ($certificate1 != '') {
+                        ?>
+                        <h3 class="eduopen-link coursedetailsh3"><?php echo get_string('att_cert', 'local_course_extrasettings'); ?></h3>
+                        <img src="<?php echo $certificate1; ?>" class="img-responsive"></img>
+                        <?php } }  ?>
+                        <!--Verified Certificate-->
+                        <?php
+                        if ($allsetting->certificate2 == 1) {
+                        $certificate2 = certificate_images2($allsetting);
+                        if ($certificate2 != '') {
+                        ?>
+                        <h3 class="eduopen-link coursedetailsh3"><?php echo get_string('verify_cert', 'local_course_extrasettings'); ?></h3>
+                        <img src="<?php echo $certificate2; ?>" class="img-responsive"></img>
+                        <?php } }  ?>
+                        <!--Exam Certificate-->
+                        <?php
+                        if ($allsetting->certificate == 1) {
+                        $certificate = certificate_images($allsetting);
+                        if ($certificate != '') {
+                        ?>
+                        <h3 class="eduopen-link coursedetailsh3"><?php echo get_string('exam_cert', 'local_course_extrasettings'); ?></h3>
+                        <img src="<?php echo $certificate; ?>" class="img-responsive"></img>
+                        <?php } }  ?>
+                    </div><!--end of certificate image section -->
+                    <?php } ?>
+
+                </div><!--End of course sidebar-->
+            </div><!--end of row2-->
+        </div><!--end of row-->
+        <!-- All Editing Teachers -->
+        <div class="all-instructors">
+            <?php
+            $cARREDIT = (Array)$id;
+            //validation.
+            $arrayim = implode(',', $cARREDIT);
+            $instruct = $DB->get_records_sql("SELECT DISTINCT u.id, c.visible, u.firstname, u.lastname, u.department, u.picture,
+            r.name FROM {course} c JOIN {context} ct ON c.id = ct.instanceid
+            JOIN {role_assignments} ra ON ra.contextid = ct.id JOIN {user} u ON u.id = ra.userid
+            JOIN {role} r ON r.id = ra.roleid WHERE r.shortname = 'editingteacher' AND c.visible=1 AND c.id IN ($arrayim)");
+            if (!empty($instruct)) {
+            echo html_writer::div(html_writer::tag('h2', 
+            get_string('instructors', 'theme_eduopen'), array('class' => 'eduopen-link')),
+            'container-fluid  tcenter fcourse');
+            echo html_writer::div('<hr>');
+            }
+            $editflag = 'editflag';// editing teacher.
+            if (!empty($cARREDIT)) {
+            echo instructor_block($cARREDIT, $editflag);
+            }
+            ?>
+        </div><!--End of Editing Teacher-->
+        <!-- All Non-editing Teacher -->
+        <div class="all-instructors">
+            <?php
+            $crsARR = (Array)$id;
+            if (!empty($crsARR)) {
+            $arrayimp = implode(',', $crsARR);
+            $instructors = $DB->get_records_sql("SELECT DISTINCT u.id, c.visible, u.firstname, u.lastname, u.department, u.picture,
+            r.name FROM {course} c JOIN {context} ct ON c.id = ct.instanceid
+            JOIN {role_assignments} ra ON ra.contextid = ct.id JOIN {user} u ON u.id = ra.userid
+            JOIN {role} r ON r.id = ra.roleid WHERE r.shortname = 'teacher' AND c.visible=1 AND c.id IN ($arrayimp)");
+            if (!empty($instructors)) {
+            echo html_writer::div(html_writer::tag('h2', 
+            get_string('noneditteacher', 'theme_eduopen'), array('class' => 'eduopen-link')),
+            'container-fluid tcenter fcourse');
+            echo html_writer::div('<hr>');
+            }
+            $noneditflag = 'noneditflag';// non-editing teacher.
+            echo instructor_block($crsARR, $noneditflag);
+            }
+            ?>
+        </div><!--End of Non-editing Teacher-->
+        <div class="container-fluid tcenter fcourse">
+            <?php
+            $temp = array();
+            $coursedetails = $DB->get_records('course', array('category' => $cssetting->category));
+            foreach ($coursedetails as $coursename) {
+            $courseid = $coursename->id;
+            if ($courseid != $cssetting->id) {
+            $temp[] = $courseid;
+            }
+            }
+            ?>          
+            <h2>
+                <?php echo get_string('relatedcourses', 'theme_eduopen'); ?>
+            </h2>
+            <hr>
+        </div>
+        <div class="row-fluid" id="frontrowpad">
+            <?php   
+            $blockcount = 0; 
+            $currentcrid[] = $_GET['courseid']; // Current pgae id.
+            //$coursedetails = $DB->get_records('course', array('category' => $cssetting->category, 'visible' => 1));
+            $coursedetails = $DB->get_records_sql("SELECT c.id FROM {course} c 
+                JOIN {course_extrasettings_general} ce ON ce.courseid=c.id
+                JOIN {course_categories} cat ON cat.id=c.category
+                WHERE c.visible=1 AND c.category=$cssetting->category AND ce.capstonecrs!=1");
+            foreach ($coursedetails as $coursename) {
+            $cidArray[] = $coursename->id;
+            $blockcount++;
+            }
+            $crsidArray = array_diff($cidArray, $currentcrid);
+            if (!empty($crsidArray)) {
+            echo featuredcourse_block($crsidArray);
+            } else {
+            echo '<div class="alert alert-warning"><center>' . get_string('norelatedcrs', 'theme_eduopen') . '</center></div>';
+            }
+
+            if (( $blockcount % 4) == 0) {
+            echo '</div>';
+            }
+            if (($blockcount % 4) == 0) {
+            echo '<div class="row">';
+            }
+            ?> 
+        </div><!--row-1-->
+        <div class="row-fluid" id="frontrowpad">
+            <div class="container-fluid  tcenter viewmorebtn" id="">
+                <a class="btn" href="<?php echo $CFG->wwwroot.'/eduopen/catalog.php?mode=browseallcourses'?>">
+                    <?php echo get_string('browsemorecourses', 'theme_eduopen'); ?>
+                </a>
+            </div>
+        </div>
+        <?php }} ?>
+    </div><!--end of container-->
+</body>
+</html>

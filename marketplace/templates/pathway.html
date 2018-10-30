@@ -1,0 +1,144 @@
+<html>
+<body>
+<div id ="homepage" class="container-fluid">
+    <div class="row">
+        <div id="slider1_container" class="jsocont">
+            <div u="slides" class="jslide">
+                <?php
+                $allspecial = $DB->get_records_sql("SELECT name FROM {block_eduopen_master_special} WHERE status='1'");
+                $specialcount = count($allspecial);
+
+                $bck = "SELECT id, name, banner FROM {block_eduopen_master_inst} ORDER BY RANDOM()";
+                $institution = $DB->get_records_sql($bck);
+                foreach ($institution as $institutions) {
+                    $institutionsobj = new stdClass();
+                    $institutionsobj = $institutions;
+                }
+                $banner = banner_images($institutionsobj);
+                                       
+
+                $myinst = $DB->get_records('block_eduopen_master_inst');
+                foreach ($myinst as $institution) {
+                    $allspecial = $DB->get_records_sql("SELECT id,specializations FROM {course_extrasettings_general}
+                    where institution = '$institution->id'");
+                    $spzli = 'Specialization';
+                ?>
+                <div class="jumbotron">
+                    <img u="image" src="<?php echo $banner ;?>" />
+                    <div class="inst-link mdquery" style="position: absolute;width: 400px;
+                    height: 120px; top: 40px; left: 164px; padding: 5px; text-align: left; "> 
+                        <p class="spzmsg">
+                            <span class="txtbgcolor">
+                                <?php print_string('mastersplz', 'theme_eduopen'); ?>
+                            </span>
+                        </p>
+                        <p class="spzmsg">
+                            <span class="txtbgcolor">
+                                <?php print_string('followone', 'theme_eduopen'); ?>
+                            </span>
+                        </p>
+                        <p class="spzmsg2">
+                            <i class="fa fa-connectdevelop"></i>&nbsp;
+                            <?php echo $specialcount; ?>
+                            <?php print_string('splz', 'theme_eduopen'); ?>
+                        </p>
+                    </div> 
+                    <div class="ctspecial" style="position: absolute;width: 700px; height: 120px;
+                    top: 190px; left: 164px; padding: 5px; text-align: left; ">
+                    </div>
+                    <div class="spz-link" style="padding: 5px; text-align: left;top:245px"> 
+                        <a href ="<?php echo $CFG->wwwroot.'/eduopen/institution_details.php?institutionid='.
+                        $institutionsobj->id; ?>">
+                            <span class="txtbgcolor">
+                                <?php echo $institutions->name;?>
+                            </span>
+                        </a>
+                    </div>                                          
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row" id="rowmrgspl1"> 
+        <h2><center><?php print_string('featurespl', 'theme_eduopen') ?></center></h2>
+        <hr>
+    </div>
+    <div class="row" id="rowmrgspl2"> 
+        <?php
+        $blockcount = 0;
+        $allspecial = $DB->get_records('block_eduopen_master_special', array('status' => '1'));
+        foreach ($allspecial as $specialdetails) {
+            $specialimg = specialization_images($specialdetails);
+            $defaultcourseimage = $CFG->wwwroot.'/theme/eduopen/pix/default_path.gif';
+            $specialimg = $specialimg ? $specialimg : $defaultcourseimage;
+            $blockcount++;
+
+            if (($blockcount) % 2 == 0) {
+                $oe = 'Even';
+            } else {
+                $oe = 'Odd';
+            }
+        ?>
+        <div class="col-md-3 col-sm-6 col-xs-12 special_imgs pathway_<?php echo $oe; ?>  pad0A">
+            <div class="cleanimg box-shadow-spz pad0A">
+                <div class="path-img<?php echo $specialdetails->degree; ?>">
+                    <a href="<?php echo $CFG->wwwroot.'/eduopen/pathway_details.php?specialid='.$specialdetails->id ?> ">
+                        <img src="<?php echo $specialimg ?>" class="img-responsive" width="100%"/>
+                        <?php if ($specialdetails->degree == 1) { ?>
+                        <div class="mbanner">
+                            <?php echo $degree = get_string('mdeg', 'theme_eduopen');?>
+                        </div>
+                        <?php } else if ($specialdetails->degree == 2) { ?>
+                        <div class="abanner">
+                            <?php echo $degree = get_string('adeg', 'theme_eduopen');?>
+                        </div>
+                        <?php } else if ($specialdetails->degree == 3) { ?>
+                        <div class="obanner">
+                            <?php echo $degree = get_string('odeg', 'theme_eduopen');?>
+                        </div>
+                        <?php } else { ?>
+                        <div class="empty_ban"></div>
+                        <?php } ?>
+                    </a>
+                </div>
+
+                <div id="path_name" class="special_nms<?php echo $specialdetails->degree; ?>">
+                    <a href="<?php echo $CFG->wwwroot.'/eduopen/pathway_details.php?specialid='.$specialdetails->id ?> ">
+                        <p><?php echo $specialdetails->name;?></p>
+                    </a>
+                </div>
+                <?php
+                $coursedetailsresultset = $DB->get_records_sql("SELECT DISTINCT institution FROM
+                {course_extrasettings_general} where  specializations Like '%$specialdetails->id%'");
+                foreach ($coursedetailsresultset as $allcourses) {   
+                    $coursedetailsid = $DB->get_record_sql("SELECT id, name FROM {block_eduopen_master_inst}
+                    where id = '$allcourses->institution'");
+                ?>
+                <div class="inst_right">
+                    <a href="<?php echo $CFG->wwwroot.'/eduopen/institution_details.php?institutionid='.$coursedetailsid->id ?> ">
+                        <p><?php echo $coursedetailsid->name;?><p>
+                    </a>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+        <?php
+        if (($blockcount % 4) == 0) {
+            // echo '</div>' ;
+        }
+        if (($blockcount % 4) == 0) {
+            //echo '<div class ="row dsrow" id="rowmrgspl2">' ;
+        }
+        }
+        ?>
+    </div>
+    <div class="row" id="rowmrglr3">
+        <a class="btn btn-info" href="<?php echo $CFG->wwwroot.'/eduopen/catalog.php' ?> ">
+            <?php print_string('spzview', 'theme_eduopen') ?>
+        </a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/specialization/db" VERSION="20160826" COMMENT="XMLDB file for Moodle blocks/specialization"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+    <TABLES>
+        <TABLE NAME="block_eduopen_master_special" COMMENT="block_eduopen_master_special table retrofitted from MySQL">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="specialization_picture" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="overview" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="overview_video" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="certificate" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="background" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="status" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="title1" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="text1" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="title2" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="text2" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="degree" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="deg_title" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="deg_cost" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="deg_currency" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="pathlanguage" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="localname" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="localoverview" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="category" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="pathwaystatus" TYPE="int" LENGTH="20" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+                <FIELD NAME="featuredpathway" TYPE="int" LENGTH="20" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="eduopen_special_course_seq" COMMENT="eduopen_special_course_seq table retrofitted from MySQL">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="specializationid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="courseid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="sequence" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="icontype" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+    </TABLES>
+</XMLDB>

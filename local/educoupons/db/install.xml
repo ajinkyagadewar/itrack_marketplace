@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/ediscount/db" VERSION="20140203" COMMENT="XMLDB file for Moodle Local/ediscount"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="educoupons" COMMENT="educoupon discount table retrofitted from MySQL">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="true" NEXT="cpnpercent"/>
+        <FIELD NAME="cpnpercent" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="cpnstartdate"/>
+        <FIELD NAME="cpnstartdate" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" PREVIOUS="cpnpercent" NEXT="cpnenddate"/>
+        <FIELD NAME="cpnenddate" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" PREVIOUS="cpnstartdate" NEXT="courseprefix"/>
+        <FIELD NAME="courseprefix" TYPE="char" NOTNULL="true" SEQUENCE="false" PREVIOUS="cpnenddate" NEXT="recprefix"/>
+        <FIELD NAME="recprefix" TYPE="char" NOTNULL="true" SEQUENCE="false" PREVIOUS="courseprefix" NEXT="trackid"/>
+        <FIELD NAME="trackid" TYPE="char" NOTNULL="true" SEQUENCE="false" PREVIOUS="recprefix" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" PREVIOUS="trackid" NEXT="status"/>
+        <FIELD NAME="status" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" PREVIOUS="courseid" NEXT="noc"/>
+        <FIELD NAME="noc" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" PREVIOUS="status" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="char" NOTNULL="false" SEQUENCE="false" PREVIOUS="noc" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="char" NOTNULL="false" SEQUENCE="false" PREVIOUS="ppcode" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="char" NOTNULL="false" SEQUENCE="false" PREVIOUS="userid" NEXT="deleted"/>
+        <FIELD NAME="deleted" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="trackid" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="edu_couponcode" COMMENT="couponcode generated for trackid related to educoupon table">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="true"  NEXT="tid"/>
+        <FIELD NAME="tid" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="couponcode"/>
+        <FIELD NAME="couponcode" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" PREVIOUS="tid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="couponcodes" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+  </TABLES>
+</XMLDB>

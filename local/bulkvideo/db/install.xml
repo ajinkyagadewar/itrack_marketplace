@@ -1,0 +1,27 @@
+<XMLDB xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" PATH="local/bulkvideo/db" VERSION="20151029"
+    COMMENT="XMLDB file for Moodle local/bulkvideo" xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+    <TABLES>
+        <TABLE NAME="local_bulkvideo_log" COMMENT="Stores mod creation history details from csv">
+            <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="videourl"/>
+            <FIELD NAME="videourl" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" DEFAULT="NULL" PREVIOUS="id" NEXT="courseid"/>
+            <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" DEFAULT="0" PREVIOUS="videourl" NEXT="sectionid"/>
+            <FIELD NAME="sectionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" DEFAULT="0" PREVIOUS="courseid"
+                NEXT="modname"/>
+            <FIELD NAME="modname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" DEFAULT="NULL" PREVIOUS="sectionid"
+                NEXT="modcreated"/>
+            <FIELD NAME="modcreated" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" DEFAULT="0" PREVIOUS="modname"
+                NEXT="timecreated"/>
+            <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="modname"
+                NEXT="timemodified"/>
+            <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timecreated"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="ix_modcreated" UNIQUE="false" FIELDS="modcreated"/>
+            </INDEXES>
+        </TABLE>
+    </TABLES>
+</XMLDB>

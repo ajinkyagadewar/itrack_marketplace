@@ -1,0 +1,351 @@
+.margin2x{
+    margin-top:20px;
+}
+.bg-primary {
+    color: #fff;
+    background-color: #337ab7;
+    padding: 5px 18px;
+}
+.bottomline{
+    border-bottom: 1px solid #CCC;
+    width: 100%;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+.lead17x{
+    font-size:17px !important;
+    margin-bottom: 0px!important;
+}
+.search-input-box{
+    height: 34px !important;
+}
+
+.notfound{
+    border:solid 1px #F00;
+}
+.user-lists{
+    list-style-type: none;
+    margin: 0px;
+}
+.user-lists input[type="radio"] {
+    margin: -2px 0 0;
+}
+.divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 7px 0px;
+}
+.subtable{
+    margin-left:62px;
+}
+.extrawidth{
+    width:800%;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid rgba(239, 239, 239, 1);
+}
+.nobottom{
+    margin-bottom: 0px !important;
+}
+.subtable{
+    margin-left: 115px;
+}
+
+.search-form .form-control{
+    border-radius:4px 0px 0px 4px !important;
+}
+.search-form .btn-default{
+    border-radius: 0px 4px 4px 0px !important;
+    margin-left:-5px;
+    margin-top: -11px;
+}
+.ereport .lead{
+    margin:0px!important;
+    padding:0px!important;
+}
+.ereport .page-header {
+    margin:0px!important;
+    padding:0px!important;
+}
+
+#main-panel{
+    margin-left:0px !important
+}
+
+.ajax-loader {
+    margin: 0px auto;
+    position: relative;
+    top: 150px;
+    text-align: center;
+}
+.ajax-loader p{
+    color: rgba(95, 126, 126, 1);
+    margin-top: 5px;
+}
+
+/*.img-circle{
+    height: 35px !important;
+}*/
+.profile{
+    overflow: auto;
+}
+
+
+input[id="search-query"]{
+   border-radius: 1px !important;
+}
+
+/* Added by Shiuli on 8th Dec to show/hide user-list*/
+#region-main .user-lists {
+    overflow-y: scroll;
+    max-height: 220px;
+    margin-bottom: 5%;
+    width: 65%;
+}
+
+ul.user-lists:empty {
+    display: none;
+}
+
+.redmark {
+    color: red;
+}
+
+/*.teacherrowdiv, .studentrowdiv {
+    margin-left: 17% !important;
+}*/
+
+.notetouser {
+    margin-bottom: 1%;
+    font-size: 14px !important;
+    font-weight: 600;
+}
+#formgroupid {
+    display: inline !important;
+}
+
+#search-query {
+    margin-bottom: 2%;
+    width: 65%;
+}
+
+.adminrowdiv .search-response {
+    margin-top: 7%;
+    width: 65%;
+}
+.teacherrowdiv .search-response {
+    margin-top: 6%;
+    width: 65%;
+}
+
+/*Added by Shiuli */
+#page-local-myanalytics-site-site_overview #user_chart, #page-local-myanalytics-site-site_overview #course_chart {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 4%;
+}
+
+#page-local-myanalytics-course-course_overview #coursecomplete, #page-local-myanalytics-course-course_overview #categorycourses{
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 4%;
+}
+
+#page-local-myanalytics-course-course_level_report #coursecomplete,
+#page-local-myanalytics-course-course_level_report #quizreport,
+#page-local-myanalytics-course-course_level_report #discussionchart,
+#page-local-myanalytics-course-course_level_report #usercompletion,
+#page-local-myanalytics-course-course_level_report #useractivity {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 4%;
+}
+
+#page-local-myanalytics-site-site_overview .lead, #page-local-myanalytics-course-course_overview .lead {
+    margin-bottom: 2% !important;
+}
+
+
+/* Added by nihar */
+#page-local-myanalytics-site-site_overview .panel-info>.panel-body {
+    border-left: 2px solid #BDC2C5 !important;
+    border-right: 2px solid #BDC2C5 !important;
+    border-bottom: 2px solid #BDC2C5 !important;
+}
+
+.panel-warning>.panel-heading {
+    color: #FFFFFF !important;
+    background-color: #2C3E52 !important;
+    border-color: #bce8f1 !important;
+}
+
+.panel-warning >.panel-body {
+    border-left: 2px solid #2C3E52 !important;
+    border-right: 2px solid #2C3E52 !important;
+    border-bottom: 2px solid #2C3E52 !important;
+}
+
+#page-local-myanalytics-site-site_overview .table>thead>tr>th {
+    border-bottom: 2px solid #bce8f1 !important;
+}
+
+#page-local-myanalytics-site-site_overview .table, #page-local-myanalytics-course-course_level_report .table {
+    border: 1px solid;
+}
+
+.datanfound {
+    text-align: center;
+    padding: 10px 6px;
+}
+
+label[for="fav-check"] {
+    color:red !important;
+}
+
+#page-local-myanalytics-course-course_level_report #activitylinechart {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 4%;
+}
+
+#page-local-myanalytics-course-course_level_report #quiztable {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 4%; 
+}
+
+#page-local-myanalytics-user-user_search #usercoursesgrade {
+     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 4%; 
+}
+
+#page-local-myanalytics-user-user_search .panel-default>.panel-heading {
+    background-color: #ddd !important;
+    border-bottom: 2px solid rgb(177, 177, 177) !important;
+    border-top: 1px solid rgb(197, 193, 193) !important;
+    border-left: 1px solid rgb(197, 193, 193) !important;
+    border-right: 1px solid rgb(197, 193, 193) !important;
+}
+
+#page-local-myanalytics-user-user_completions .panel-title>a {
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+#page-local-myanalytics-user-user_completions .hd>a {
+    color: #FFFFFF !important;
+}
+
+
+#page-local-myanalytics-user-user_completions .panel-title>a:hover {
+    color: #FFFFFF;
+}
+/*#page-local-myanalytics-user-user_completions .panel-title {
+    margin-bottom: 1%;
+}*/
+
+#page-local-myanalytics-user-user_completions .cdtlrow {
+    margin-bottom: 1%;
+}
+
+#page-local-myanalytics-user-user_completions .cdtlrow table.generaltable {
+    border: 1px solid rgb(177, 177, 177);
+}
+
+#page-local-myanalytics-site-favourites .tablcs {
+    border: 1px solid rgb(185, 183, 183);
+}
+
+#page-local-myanalytics-user-user_search .panelhdcs {
+    height: 100px;
+}
+
+label.bottomline {
+    color: #000 !important;
+}
+
+#page-local-myanalytics-course-course_level_report .dataTables_empty {
+    text-align: center;
+}
+
+#page-local-myanalytics-user-user_search #usercoursesgrade {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 4%;
+}
+.ytp-watermark {
+    display:none !important;
+}
+
+/* Added by Shiuli on 28th dec */
+.leadwdt {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+#coursesuserdetails_wrapper, #reporttable_wrapper, #ndf, #quiztable_wrapper, #activitytable_wrapper,
+#courseactivity_wrapper {
+    border-left: 2px solid #2C3E52 !important;
+    border-right: 2px solid #2C3E52 !important;
+    border-bottom: 2px solid #2C3E52 !important;
+    padding: 15px 0px;
+}
+
+.nodatafound {
+    text-align: center;
+}
+
+/* added by shiuli on 15th dec */
+.no-marg {
+    margin-bottom: 0 !important;
+}
+
+
+/* Added by shiuli for table bottom border breaks in chrome */
+table {
+    border-collapse: inherit !important;
+    padding: 0 !important;
+}
+
+
+
+/* css for responsiveness */ 
+.dataTables_length, .dataTables_filter {
+    padding: 0px !important;
+}
+
+@media screen and (max-width: 640px) {
+div.DTTT_container {
+    float: left  !important;
+}
+}
+
+@media screen and (min-width: 507) and (max-width: 640px) {
+    div.DTTT_container {
+        float: left !important;
+        margin-left: 10px !important;
+    }
+}
+
+@media screen and (max-width: 506px) {
+    .dataTables_filter {
+        float: initial !important;
+    }
+    div.DTTT_container {
+        float: initial !important;
+        margin-left: 0px !important;
+    }
+    
+    div.dataTables_wrapper div.dataTables_filter label,
+    div.DTTT_container {
+        display: -webkit-box !important;
+        display: -moz-box !important;
+        display: -ms-flexbox !important;
+        display: -webkit-flex !important;
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        -moz-box-pack: center !important;
+        -ms-flex-pack: center !important;
+        -webkit-justify-content: center !important;
+        justify-content: center !important;
+        -webkit-box-align: center !important;
+        -moz-box-align: center !important;
+        -ms-flex-align: center !important;
+        -webkit-align-items: center !important;
+        align-items: center !important;
+    }
+}
